@@ -1,25 +1,23 @@
-// Webhook-endepunkt: Tar imot og logger payload, svarer med status.
-// Bruk: Integrasjon med eksterne systemer (Pipedream).
+# Pipedream Webhook-endepunkt
 
-export default defineComponent({
-  async run({ steps, $ }) {
-    try {
-      const payload = steps.trigger.event.body;
-      if (!payload) {
-        throw new Error("Ingen payload mottatt");
-      }
-      $.export("received_payload", payload);
-      return {
-        status: "ok",
-        message: "Payload mottatt",
-        payload
-      };
-    } catch (error) {
-      $.export("error", error.message);
-      return {
-        status: "error",
-        message: error.message
-      };
-    }
-  }
-});
+API-endepunkt som mottar og logger en JSON-payload fra eksterne systemer.
+
+## Bruksområde
+
+- Integrasjon mellom applikasjoner
+- Logging av innkommende data
+
+## Funksjon
+
+- Validerer at payload faktisk er mottatt
+- Logger payload som "received_payload"
+- Returnerer statusmelding ("ok" eller "error")
+
+## Eksempel på respons
+
+```json
+{
+  "status": "ok",
+  "message": "Payload mottatt",
+  "payload": { /* innhold */ }
+}
